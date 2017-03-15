@@ -11,17 +11,21 @@ class Data:
     def analyze(self):
         if (type(self.stored) is str):
             try:
-                return eval(self.stored)
+                self.result = eval(self.stored)
+                return self.result
             except: 
                 if (os.path.exists(self.stored)):
                     p = Path(self.stored)
-                    return p.stat()
+                    self.result = p.stat()
+                    return self.result
                 else:
                     try:
                         root = ET.fromstring(self.stored)
                         l = list()
                         for element in root.iter('*'):
                             l.append(element)
-                        return l
+                        self.result = l
+                        return self.result
                     except:
+                        self.result = self.stored
                         return self.stored
